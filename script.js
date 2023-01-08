@@ -10,10 +10,10 @@ function createCanvas(num) {
   container.style.gridTemplateColumns = `repeat(${num}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${num}, 1fr)`;
 
-  for (let i = 0; i < (num ** 2); i++) {
-      const cell = document.createElement("div");
-      container.appendChild(cell);
-    }
+  for (let i = 0; i < num ** 2; i++) {
+    const cell = document.createElement("div");
+    container.appendChild(cell);
+  }
 }
 createCanvas(currentSquares);
 
@@ -63,4 +63,3 @@ function updateSliderText(value) {
 slider.onmousemove = (e) => updateSliderText(e.target.value);
 
 slider.onchange = (e) => createCanvas(e.target.value);
-
