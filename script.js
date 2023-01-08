@@ -1,82 +1,66 @@
+const defaultSquares = 64;
+
+let currentSquares = defaultSquares;
+
+// Adding divs to main to create canvas
+
 const container = document.getElementById("container");
-const defaultBoxes = 16;
 
-let currentBoxes = defaultBoxes;
+function createCanvas(num) {
+  container.style.gridTemplateColumns = `repeat(${num}, 1fr)`;
+  container.style.gridTemplateRows = `repeat(${num}, 1fr)`;
 
-function setCurrentBoxes(newBoxes) {
-  currentBoxes = newBoxes;
+  for (let i = 0; i < (num ** 2); i++) {
+      const cell = document.createElement("div");
+      container.appendChild(cell);
+    }
 }
+createCanvas(currentSquares);
 
-function reloadGrid() {
-  clearGrid();
-  makeDiv(currentBoxes);
-}
+//Adding functionality to Color Mode button
 
-function clearGrid() {
-  container.innerHTML = "";
-}
-
-function changeGridSize(value) {
-  setCurrentBoxes(value);
-  updateSizeValue(value);
-  reloadGrid();
-}
-
-function makeDiv(x) {
-  container.style.gridTemplateColumns = `repeat(${x}, 1fr)`;
-  container.style.gridTemplateRows = `repeat(${x}, 1fr)`;
-  for (let i = 0; i < x ** 2; i++) {
-    let cell = document.createElement("div");
-    // cell.style.color = "black";
-    cell.className = "item";
-    container.appendChild(cell);
-  }
-}
-
-makeDiv(currentBoxes);
-
-//COLOR MODE FUNCTION
-
-const gridItems = document.querySelectorAll("div");
 const colorMode = document.querySelector(".color-mode");
-// console.log(gridItems);
+const gridItems = document.querySelectorAll("div");
+const colorWheel = document.getElementById("favcolor");
 
 colorMode.addEventListener("click", () => {
   gridItems.forEach((item) => {
     item.addEventListener("mouseover", () => {
-      item.style.backgroundColor = "black";
+      item.style.backgroundColor = colorWheel.value;
     });
   });
 });
 
-//ERASER FUNCTION
+//Adding functionality to Eraser button
 const eraser = document.querySelector(".eraser");
-// console.log(eraser);
 
 eraser.addEventListener("click", () => {
   gridItems.forEach((item) => {
     item.addEventListener("mouseover", () => {
-      item.style.backgroundColor = "white";
+      item.style.backgroundColor = "#ffffff";
     });
   });
 });
 
-//CLEAR FUNCTION
+//Adding functionality to Clear button
 const clear = document.querySelector(".clear");
 
 clear.addEventListener("click", () => {
   gridItems.forEach((item) => {
-    item.style.backgroundColor = "white";
+    item.style.backgroundColor = "#ffffff";
   });
 });
 
-//SLIDER FUNCTION
-const slider = document.getElementById("slider");
-const sliderText = document.querySelector(".size-slider");
+//Adding functionality to slider bar
 
-function updateSizeValue(value) {
-  sliderText.innerHTML = `${value} x ${value}`;
+const slider = document.getElementById("slider");
+const sliderText = document.getElementsByClassName("size-slider");
+
+function updateSliderText(value) {
+  sliderText[1].innerHTML = `${value} x ${value}`;
 }
 
-slider.onmousemove = (e) => updateSizeValue(e.target.value);
-slider.onchange = (e) => changeGridSize(e.target.value);
+slider.onmousemove = (e) => updateSliderText(e.target.value);
+
+slider.onchange = (e) => createCanvas(e.target.value);
+
