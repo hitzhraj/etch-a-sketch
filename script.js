@@ -51,6 +51,20 @@ clear.addEventListener("click", () => {
   });
 });
 
+//Adding functionality to Random mode button
+const randomColor = document.querySelector(".random-mode");
+
+randomColor.addEventListener("click", () => {
+  let randomR = Math.floor(Math.random() * 256);
+  let randomG = Math.floor(Math.random() * 256);
+  let randomB = Math.floor(Math.random() * 256);
+  gridItems.forEach((item) => {
+    item.addEventListener("mouseover", () => {
+      item.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
+    });
+  });
+});
+
 //Adding functionality to slider bar
 
 const slider = document.getElementById("slider");
